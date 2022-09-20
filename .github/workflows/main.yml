@@ -54,8 +54,6 @@ jobs:
                     fi
                 done
           elif [ "$RUNNER_OS" == "Linux" ]; then
-                export FPM_DEBUG=true
-                export DEBUG=electron-builder
                 make build
                 cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.AppImage releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
                 cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.amd64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.deb
