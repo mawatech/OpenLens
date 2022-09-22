@@ -16,6 +16,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3.0.2
+      - name: Install old rpm
+        run: |
+            curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/rpm_4.14.2.1+dfsg1-1build2_amd64.deb
+            sudo dpkg -i rpm_4.14.2.1+dfsg1-1build2_amd64.deb
       - name: Export version to variable
         run: |
             export LENS_VERSION=$(cat version)
