@@ -25,7 +25,10 @@ jobs:
             curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/librpmbuild8_4.14.2.1+dfsg1-1build2_amd64.deb
             curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/librpmio8_4.14.2.1+dfsg1-1build2_amd64.deb
             curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/librpmsign8_4.14.2.1+dfsg1-1build2_amd64.deb
+            curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/debugedit_4.14.2.1+dfsg1-1build2_amd64.deb
+            curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/rpm-common_4.14.2.1+dfsg1-1build2_amd64.deb
             sudo dpkg -i *.deb
+            sudo apt-get -f install
             cd ..
       - name: Export version to variable
         run: |
