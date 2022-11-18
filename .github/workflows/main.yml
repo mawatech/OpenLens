@@ -20,18 +20,20 @@ jobs:
         uses: actions/checkout@v3.0.2
       - name: Install old rpm
         run: |
-            mkdir rpm_down
-            cd rpm_down
-            curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/rpm_4.14.2.1+dfsg1-1build2_amd64.deb
-            curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/librpm8_4.14.2.1+dfsg1-1build2_amd64.deb
-            curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/librpmbuild8_4.14.2.1+dfsg1-1build2_amd64.deb
-            curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/librpmio8_4.14.2.1+dfsg1-1build2_amd64.deb
-            curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/librpmsign8_4.14.2.1+dfsg1-1build2_amd64.deb
-            curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/debugedit_4.14.2.1+dfsg1-1build2_amd64.deb
-            curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/rpm-common_4.14.2.1+dfsg1-1build2_amd64.deb
-            curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/main/l/lua5.2/liblua5.2-0_5.2.4-1.1build3_amd64.deb
-            sudo dpkg -i *.deb
-            cd ..
+            if [ "$RUNNER_OS" == "Linux" ]; then
+              mkdir rpm_down
+              cd rpm_down
+              curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/rpm_4.14.2.1+dfsg1-1build2_amd64.deb
+              curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/librpm8_4.14.2.1+dfsg1-1build2_amd64.deb
+              curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/librpmbuild8_4.14.2.1+dfsg1-1build2_amd64.deb
+              curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/librpmio8_4.14.2.1+dfsg1-1build2_amd64.deb
+              curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/librpmsign8_4.14.2.1+dfsg1-1build2_amd64.deb
+              curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/debugedit_4.14.2.1+dfsg1-1build2_amd64.deb
+              curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/rpm-common_4.14.2.1+dfsg1-1build2_amd64.deb
+              curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/main/l/lua5.2/liblua5.2-0_5.2.4-1.1build3_amd64.deb
+              sudo dpkg -i *.deb
+              cd ..
+            fi
       - name: Export version to variable
         run: |
             export LENS_VERSION=$(cat version)
