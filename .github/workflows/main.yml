@@ -12,7 +12,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ ubuntu-20.04, macos-latest, windows-latest ]
+        os: [ubuntu-22.04]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 360
     env:
@@ -20,7 +20,22 @@ jobs:
     steps:
       - name: Checkout OpenLens
         uses: actions/checkout@v3
-
+      - name: Install old rpm
+        run: |
+            if [ "$RUNNER_OS" == "Linux" ]; then
+              mkdir rpm_down
+              cd rpm_down
+              curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/rpm_4.14.2.1+dfsg1-1build2_amd64.deb
+              curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/librpm8_4.14.2.1+dfsg1-1build2_amd64.deb
+              curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/librpmbuild8_4.14.2.1+dfsg1-1build2_amd64.deb
+              curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/librpmio8_4.14.2.1+dfsg1-1build2_amd64.deb
+              curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/librpmsign8_4.14.2.1+dfsg1-1build2_amd64.deb
+              curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/debugedit_4.14.2.1+dfsg1-1build2_amd64.deb
+              curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/universe/r/rpm/rpm-common_4.14.2.1+dfsg1-1build2_amd64.deb
+              curl -sLO http://de.archive.ubuntu.com/ubuntu/pool/main/l/lua5.2/liblua5.2-0_5.2.4-1.1build3_amd64.deb
+              sudo dpkg -i *.deb
+              cd ..
+            fi
       - name: Export version to variable
         run: echo "LENS_VERSION=$(cat version)" >> $GITHUB_ENV
         shell: bash
@@ -28,7 +43,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "16.x"
-
       - name: Checkout Upstream Lens
         uses: actions/checkout@v3
         with:
